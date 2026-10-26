@@ -1,0 +1,110 @@
+{%- comment -%}
+  CMU Pages: plain Markdown on GitHub Pages, in Carnegie Mellon's web template
+  with the Carnegie Mellon Web Kit. Settings, all optional, in _config.yml:
+    title        the site's name, in the header and footer
+    description  a line under the name
+    cmu.roof     red (default), gray, or white
+    cmu.kit      the web kit version to load
+    cmu.nav      the pages in the navigation, in order, by file name; without
+                 it, every page with a title, by nav_order in its front matter
+    cmu.footer   office (defaults to title), address (a list of lines),
+                 phone, email (a Contact Us link), and links (title and url)
+{%- endcomment -%}
+{%- assign cmu = site.cmu -%}
+{%- assign kit = cmu.kit | default: "main" -%}
+{%- assign kitcdn = "https://cdn.jsdelivr.net/gh/CMUTLI/cmu-web-kit@" | append: kit -%}
+{%- assign tpl = "https://www.cmu.edu/common/standard-v6" -%}
+{%- assign roof = "red invert" -%}
+{%- if cmu.roof == "gray" or cmu.roof == "grey" -%}{%- assign roof = "darkgrey invert" -%}{%- elsif cmu.roof == "white" -%}{%- assign roof = "" -%}{%- endif -%}
+{%- assign home = false -%}{%- if page.url == "/" or page.url == "/index.html" -%}{%- assign home = true -%}{%- endif -%}
+{%- if cmu.nav -%}
+  {%- assign navpages = "" | split: "" -%}
+  {%- for name in cmu.nav -%}
+    {%- assign found = site.html_pages | where: "path", name | first -%}
+    {%- if found -%}{%- assign navpages = navpages | push: found -%}{%- endif -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- assign listed = site.html_pages | where_exp: "p", "p.title" | where_exp: "p", "p.nav_exclude != true" | where_exp: "p", "p.url != '/'" | where_exp: "p", "p.url != '/index.html'" -%}
+  {%- comment -%} Pages with a nav_order first, in that order; then the rest, by title {%- endcomment -%}
+  {%- assign ordered = listed | where_exp: "p", "p.nav_order" | sort: "nav_order" -%}
+  {%- assign rest = listed | where_exp: "p", "p.nav_order == nil" | sort: "title" -%}
+  {%- assign navpages = ordered | concat: rest -%}
+{%- endif -%}
+{%- assign footer = cmu.footer -%}
+{%- assign office = footer.office | default: cmu.office | default: site.title -%}
+{%- if footer.address -%}{%- assign address = footer.address -%}{%- else -%}{%- assign address = "Carnegie Mellon University|5000 Forbes Avenue|Pittsburgh, PA 15213" | split: "|" -%}{%- endif -%}
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% unless home %}{{ page.title }} - {% endunless %}{{ site.title }} - Carnegie Mellon University</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,700,700italic" rel="stylesheet">
+  <link href="{{ tpl }}/css/main.6.7.min.css" media="screen" rel="stylesheet">
+  <link href="{{ tpl }}/css/print.min.css" media="print" rel="stylesheet">
+  <link href="{{ kitcdn }}/css/cmu-cms.css" rel="stylesheet">
+  <link href="https://www.cmu.edu/favicon.ico" rel="icon">
+  <link href="https://www.cmu.edu/favicon-152.png" rel="apple-touch-icon-precomposed">
+  <meta content="#9f0000" name="msapplication-TileColor">
+  <meta content="https://www.cmu.edu/favicon-144.png" name="msapplication-TileImage">
+</head>
+<body class="no-js">
+<div id="container">
+  <header>
+    <div class="roof {{ roof }}">
+      <div>
+        <a class="wordmark" href="https://www.cmu.edu/">Carnegie Mellon University</a>
+        <button aria-label="toggle menu" aria-pressed="false" class="menu-btn" href="#nav"><b>&#8212;</b><b>&#8212;</b><b>&#8212;</b></button>
+      </div>
+    </div>
+    <div id="sitename">
+      <span class="sitetitle"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></span>
+      {%- if site.description %}
+      <h2>{{ site.description }}</h2>
+      {%- endif %}
+    </div>
+  </header>
+
+  <main id="content">
+    {%- unless home %}
+    <div class="breadcrumbs">
+      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>&nbsp;&rsaquo;&nbsp;{{ page.title }}
+    </div>
+    {%- endunless %}
+    <div class="content wide"><div>
+{{ content | replace: "<table>", '<table class="alternate cmu-full">' }}
+    </div></div>
+  </main>
+
+  <footer class="grid column3 invert">
+    <div>
+      <p>{{ office }}<br>{{ address | join: "<br>" }}{% if footer.phone %}<br>{{ footer.phone }}{% endif %}{% if footer.email %}<br><a href="mailto:{{ footer.email }}">Contact Us</a>{% endif %}</p>
+      <ul>{% for l in footer.links %}<li><a href="{{ l.url }}">{{ l.title }}</a></li>{% endfor %}<li><a href="https://www.cmu.edu/legal/">Legal Info</a></li><li><a href="https://www.cmu.edu/">www.cmu.edu</a></li></ul>
+      <ul><li>&copy; {{ site.time | date: "%Y" }} Carnegie Mellon University</li></ul>
+    </div>
+    <div></div>
+    <div>
+      <nav id="nav">
+        <ul>
+          {%- for p in navpages %}
+          {%- if p.url == page.url %}
+          <li class="active"><a href="{{ p.url | relative_url }}" aria-current="page">{{ p.title }}</a></li>
+          {%- else %}
+          <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>
+          {%- endif %}
+          {%- endfor %}
+          {%- if site.github.repository_url %}
+          <li class="secondary"><a class="external" href="{{ site.github.repository_url }}">{{ site.title }} on GitHub</a></li>
+          {%- endif %}
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</div>
+<script src="{{ tpl }}/js/list.min.js"></script>
+<script src="{{ tpl }}/js/jquery-1.10.1.min.js"></script>
+<script src="{{ tpl }}/js/main.6.7.min.js"></script>
+<script src="{{ kitcdn }}/js/cmu-app.js"></script>
+<script src="{{ '/assets/js/cmu-pages.js' | relative_url }}"></script>
+</body>
+</html>
