@@ -1,13 +1,13 @@
-title: CMU Pages
+title: Carnegie Mellon Web Markdown
 description: Plain Markdown on GitHub Pages, in CMU style
 cmu:
   roof: red
   footer:
     office: Office of the Vice Provost for Teaching and Learning Innovation
     phone: 412-268-0000
-    email: cmu-pages@example.edu
+    email: cmu-web-markdown@example.edu
     links:
       - title: Carnegie Mellon Web Kit
-        url: https://cmutli.github.io/cmu-web-kit/
+        url: https://cmu-web.github.io/cmu-web-kit/
   kit: main
 exclude: [vendor, Gemfile, Gemfile.lock]

@@ -1,7 +1,7 @@
-# CMU Pages
+# Carnegie Mellon Web Markdown
 
 Plain Markdown on GitHub Pages, in CMU style: Carnegie Mellon's web template,
-with the [Carnegie Mellon Web Kit](https://cmutli.github.io/cmu-web-kit/).
+with the [Carnegie Mellon Web Kit](https://cmu-web.github.io/cmu-web-kit/).
 Write your docs the way you already do; they come out looking like cmu.edu.
 
 ## Use It
@@ -9,7 +9,7 @@ Write your docs the way you already do; they come out looking like cmu.edu.
 In your repository's `_config.yml`, name the theme and your site:
 
 ```yaml
-remote_theme: CMUTLI/cmu-pages
+remote_theme: cmu-web/cmu-web-markdown
 title: Your Office or Project
 description: A line under the name
 ```

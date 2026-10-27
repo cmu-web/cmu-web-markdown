@@ -1,5 +1,5 @@
 {%- comment -%}
-  CMU Pages: plain Markdown on GitHub Pages, in Carnegie Mellon's web template
+  Carnegie Mellon Web Markdown: plain Markdown on GitHub Pages, in Carnegie Mellon's web template
   with the Carnegie Mellon Web Kit. Settings, all optional, in _config.yml:
     title        the site's name, in the header and footer
     description  a line under the name
@@ -12,7 +12,7 @@
 {%- endcomment -%}
 {%- assign cmu = site.cmu -%}
 {%- assign kit = cmu.kit | default: "main" -%}
-{%- assign kitcdn = "https://cdn.jsdelivr.net/gh/CMUTLI/cmu-web-kit@" | append: kit -%}
+{%- assign kitcdn = "https://cdn.jsdelivr.net/gh/cmu-web/cmu-web-kit@" | append: kit -%}
 {%- assign tpl = "https://www.cmu.edu/common/standard-v6" -%}
 {%- assign roof = "red invert" -%}
 {%- if cmu.roof == "gray" or cmu.roof == "grey" -%}{%- assign roof = "darkgrey invert" -%}{%- elsif cmu.roof == "white" -%}{%- assign roof = "" -%}{%- endif -%}
@@ -105,6 +105,6 @@
 <script src="{{ tpl }}/js/jquery-1.10.1.min.js"></script>
 <script src="{{ tpl }}/js/main.6.7.min.js"></script>
 <script src="{{ kitcdn }}/js/cmu-app.js"></script>
-<script src="{{ '/assets/js/cmu-pages.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/cmu-web-markdown.js' | relative_url }}"></script>
 </body>
 </html>
