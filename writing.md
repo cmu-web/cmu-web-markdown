@@ -82,7 +82,7 @@ Tables are striped and fill the page's width.
 
 ## Code
 
-Each code block gets a box and a Copy Code button.
+Each code block gets a box with a copy icon in its corner, as on GitHub.
 
 ```bash
 git add docs/writing.md

@@ -24,7 +24,7 @@ heading in each is its title. A `README.md` becomes the home page.
 | -------------------------------- | ------------------------------------------------ |
 | Each page                        | The CMU header, navigation, breadcrumbs, footer  |
 | Tables                           | Striped tables, full width                       |
-| Code blocks                      | Code boxes with a Copy Code button               |
+| Code blocks                      | Code boxes with a copy icon, as on GitHub        |
 | `> [!NOTE]` and the other alerts | Labeled callouts                                 |
 | Other block quotes               | Notes                                            |
 

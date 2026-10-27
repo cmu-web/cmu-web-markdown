@@ -5,20 +5,23 @@
   var content = document.querySelector("#content .content");
   if (!content) return;
 
-  // Code blocks: a kit code block with a Copy Code button under it
+  // Code blocks: a kit code block with a copy icon in its corner
   content.querySelectorAll("pre").forEach(function (pre, i) {
     var code = pre.querySelector("code") || pre;
-    var block = document.createElement("pre");
+    var box = document.createElement("div");
+    box.className = "cmu-copyable";
+    var block = box.appendChild(document.createElement("pre"));
     block.className = "cmu-snippet";
     block.id = "cmu-code-" + (i + 1);
     block.appendChild(document.createElement("code")).textContent = code.textContent.replace(/\n$/, "");
-    var copy = document.createElement("p");
-    copy.innerHTML = '<button class="btn" type="button">Copy Code</button>';
-    copy.firstChild.setAttribute("data-cmu-copy", "#" + block.id);
+    var copy = box.appendChild(document.createElement("button"));
+    copy.className = "cmu-copy";
+    copy.type = "button";
+    copy.setAttribute("data-cmu-copy", "#" + block.id);
+    copy.setAttribute("aria-label", "Copy Code");
+    copy.title = "Copy Code";
     // Markdown wraps highlighted code in two divs; replace the outermost
-    var outer = pre.closest(".highlighter-rouge") || pre;
-    outer.replaceWith(block);
-    block.after(copy);
+    (pre.closest(".highlighter-rouge") || pre).replaceWith(box);
   });
 
   // GitHub's callouts (> [!NOTE] and the like) become kit callouts with
